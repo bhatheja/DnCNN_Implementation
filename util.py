@@ -4,6 +4,7 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from PIL import Image
 
 # For Loading the image using open_cv
 def image_load(path):
