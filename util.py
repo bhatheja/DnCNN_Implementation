@@ -236,7 +236,7 @@ def image_save(dataloader, model, device, directory):
     os.makedirs(f'{directory}/clean', exist_ok = True)
     os.makedirs(f'{directory}/generated', exist_ok = True)
     os.makedirs(f'{directory}/mask', exist_ok = True)
-    for ite, (clean_image, noisy_image, mask) in enumerate(dataloader):
+    for ite, (clean_image, noisy_image, mask) in tqdm(enumerate(dataloader)):
         
         _, h, w, c = noisy_image.shape
         clean_image = clean_image.squeeze(0).detach().cpu().numpy()
