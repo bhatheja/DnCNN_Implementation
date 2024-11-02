@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from PIL import Image
 
+import torch
+import torch.nn as nn
+
 # For Loading the image using open_cv
 def image_load(path):
     image = cv.imread(path)
