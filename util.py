@@ -1,4 +1,6 @@
 import os
+from tqdm import tqdm
+
 
 def image_load(path):
     image = cv.imread(path)
