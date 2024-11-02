@@ -294,7 +294,6 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
         clr_mask = clr_image * mask
         gen_mask = gen_image * mask
 
-         = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         mse = np.mean((gen_mask - clr_mask) ** 2)
         psnr.append(10 * np.log10((max_value ** 2) / mse))
 
