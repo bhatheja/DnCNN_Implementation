@@ -9,6 +9,8 @@ from PIL import Image
 import torch
 import torch.nn as nn
 
+from skimage.metrics import structural_similarity as ssim
+
 # For Loading the image using open_cv
 def image_load(path):
     image = cv.imread(path)
@@ -19,7 +21,6 @@ def image_load(path):
 def image_load_plt(path):
     image = plt.imread(path)
     return image
-
 
 # For getting the location of files for particular dataset setup
 def data_locations(directory, dataset_type = 'Train'):
@@ -262,4 +263,30 @@ def image_save(dataloader, model, device, directory):
         
         mask_image = Image.fromarray(mask)
         mask_image.save(f'{directory}/mask/{ite+1}.png')
+
+def defect_ssim_psnr(len_data = 88, max_value = 255.0, directory):
+    psnr = [], psnr_active = [], ssim = []
+    for i in range(l, len(len_data)):
+        clr_image = image_load(f'{directory}/clean')
+        gen_image = image_load(f'{directory}/generated')
+        mask = image_load_plt(f'{directory}/generated')
+
+        print(mask.shape)
+        clr_mask = clr_image * mask
+        gen_mask = gen_image * mask
+
+        mse = np.mean((gen_mask - clr_mask) ** 2)
+        psnr.append(10 * np.log10((max_value ** 2) / mse))
+
+        h, w, c = clr_mask.shape
+        mse_active = mse*h*w*c/mask.sum()
+        psnr_active.append(10 * np.log10((max_value ** 2) / mse_active))
+
+        similarity_index, _ = ssim(image1, image2, full=True)
+        ssim.append(similarity_index)
+    return ssim, psnr, psnr_active
+
+
         
+        
+    
