@@ -232,7 +232,7 @@ def psnr_values(dataloader, model, device, epoch):
     return psnr
 
 def ssim_values(dataloader, model, device, epoch):
-    ssim = []
+    ssim_val = []
     for ite, (clean_image, noisy_image, _) in enumerate(dataloader):
         _, h, w, c = noisy_image.shape
         clean_image = clean_image.squeeze(0).detach().cpu().numpy()
@@ -246,11 +246,11 @@ def ssim_values(dataloader, model, device, epoch):
             output = output.permute(0,2,3,1).detach().cpu().numpy()
             output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
             similarity_index, _ = ssim(output, clean_image, full=True)
-            ssim.append(similarity_index)
+            ssim_val.append(similarity_index)
         else:
             similarity_index, _ = ssim(noisy, clean_image, full=True)
-            ssim.append(similarity_index)
-    return ssim
+            ssim_val.append(similarity_index)
+    return ssim_val
 
 def image_save(dataloader, model, device, directory):
 
