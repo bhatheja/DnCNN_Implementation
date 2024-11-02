@@ -255,11 +255,11 @@ def image_save(dataloader, model, device, directory):
         mask = (mask).astype(np.uint8)
 
         clr_image = Image.fromarray(clean_image)
-        clr_image.save(f'{directory}/clean/{ite+1}_{psnr_val}.png')
+        clr_image.save(f'{directory}/clean/{ite+1}.png')
 
         gen_image = Image.fromarray(output)
-        gen_image.save(f'{directory}/generated/{ite+1}_{psnr_val}.png')
+        gen_image.save(f'{directory}/generated/{ite+1}.png')
         
         mask_image = Image.fromarray(mask)
-        mask_image.save(f'{directory}/mask/{ite+1}_{psnr_val}.png')
+        mask_image.save(f'{directory}/mask/{ite+1}.png')
         
