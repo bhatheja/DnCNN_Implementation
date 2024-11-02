@@ -231,6 +231,34 @@ def psnr_values(dataloader, model, device, epoch):
     return psnr
         
 
-# def image_out(dataloader, model, device):
-#     for ite, (clean_image, noisy_image, mask) in enumerate(dataloader):
+def image_save(dataloader, model, device, directory):
+
+    os.makedirs(f'{directory}/clean', exist_ok = True)
+    os.makedirs(f'{directory}/generated', exist_ok = True)
+    os.makedirs(f'{directory}/mask', exist_ok = True)
+    for ite, (clean_image, noisy_image, mask) in enumerate(dataloader):
+        
+        _, h, w, c = noisy_image.shape
+        clean_image = clean_image.squeeze(0).detach().cpu().numpy()
+        noisy_image = noisy_image.squeeze(0).detach().cpu().numpy()
+        noisy_image = np.array(create_vertical_and_horizontal_patches(noisy_image))*255.0
+        noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
+        noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
+        output = model(noisy_image)
+        output = output[:, :, 1:-1, 1:-1]
+        output = output.permute(0,2,3,1).detach().cpu().numpy()
+        output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
+
+        clean_image = (clean_image).astype(np.uint8)
+        output = (output).astype(np.uint8)
+        mask = (mask).astype(np.uint8)
+
+        clr_image = Image.fromarray(clean_image)
+        clr_image.save(f'{directory}/clean/{ite+1}_{psnr_val}.png')
+
+        gen_image = Image.fromarray(output)
+        gen_image.save(f'{directory}/generated/{ite+1}_{psnr_val}.png')
+        
+        mask_image = Image.fromarray(mask)
+        mask_image.save(f'{directory}/mask/{ite+1}_{psnr_val}.png')
         
