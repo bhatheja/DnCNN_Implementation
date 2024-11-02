@@ -185,3 +185,44 @@ def patches_load(directory, patch_size = 128, total_images = 932):
             deg = image_load(f'{directory}/degraded/{image_no+1}_{patch_idx+1}.png')
             patches.append((clean, deg))
     return patches
+
+# For image stitching back from patches
+def retrieve_image(patches, patch_size=128, img_size_height=1024, img_size_width=1024):
+    #Creating an empty image to hold the stitched result
+    stitched_image = np.zeros((1024, 1024, 3), dtype=patches[0].dtype)
+    retrieved_image = np.zeros((img_size_height, img_size_width, 3), dtype=patches[0].dtype)
+    
+    #Placing each patch in the correct location
+    idx = 0
+    for i in range(0, 1024, patch_size):
+        for j in range(0, 1024, patch_size):
+            stitched_image[i:i + patch_size, j:j + patch_size] = patches[idx]
+            idx += 1
+    retrieved_image = stitched_image[0:img_size_height, 0:img_size_width]
+    return retrieved_image
+
+# This is to get psnr value for training purpose and readjusting the learning rate
+# psnr calculation
+def cal_psnr_numpy(pred, clean, max_value=255.0):
+    mse = np.mean((clean - pred) ** 2)
+    psnr = 10 * np.log10((max_value ** 2) / mse)
+    return psnr
+
+def psnr_values(dataloader, model = model, device = device, epoch = 0):
+    # h, w, c = image.shape
+    for ite, (clear_image, noisy_image, _) in enumerate(dataloader):
+        h, w, c = noisy_image.shape
+        clean_image = clean_image.detach().cpu().numpy()
+        noisy_image = noisy_image.detach().cpu().numpy()
+        if epoch!=0
+            noisy_image = create_vertical_and_horizontal_patches(noisy_image)
+            noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
+            noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
+            output = model(noisy_image)
+            output = output[:, :, 1:-1, 1:-1]
+            output = output.permute(0,2,3,1).detach().cpu().numpy()
+            output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
+        psnr.append(cal_psnr_numpy(output, clean_image))
+    return psnr
+        
+    
