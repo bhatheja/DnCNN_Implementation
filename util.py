@@ -172,7 +172,7 @@ def patch_saving(data, patch_size_info = 128, data_type='train', folder_location
 
 # Loading images (patches) from dataset
 
-def patches_load(directory, data_type = 'train', patch_size = 128, total_images = 932):
+def patches_load(directory, patch_size = 128, total_images = 932):
     if patch_size == 128:
         total_patches = 64
     elif patch_size == 64:
