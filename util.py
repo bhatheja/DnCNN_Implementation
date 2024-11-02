@@ -140,15 +140,13 @@ def patch_saving(data, patch_size_info = 128, data_type='train', folder_location
     """
     print(f'Saving {data_type} images of patch size of {patch_size_info}')
     file_size_info = []
-    for tp in range(3):
+    for tp in range(2):
         count = 0
         # Locations to save the file
         if tp==0:
             location = f'{folder_location}/{patch_size_info}x{patch_size_info}_patches/{data_type}/clean'
         elif tp==1:
             location = f'{folder_location}/{patch_size_info}x{patch_size_info}_patches/{data_type}/degraded'
-        elif tp==2:
-            location = f'{folder_location}/{patch_size_info}x{patch_size_info}_patches/{data_type}/mask'
             
         os.makedirs(location, exist_ok = True)
         
