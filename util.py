@@ -5,7 +5,7 @@ def image_load(path):
     image[:,:,[0,2]] = image[:,:,[2,0]]
     return image
 
-def data_locations(directory, dataset_type = 'train'):
+def data_locations(directory, dataset_type = 'Train'):
     """
     for internal usage
     """
@@ -26,7 +26,7 @@ def data_locations(directory, dataset_type = 'train'):
                 file_names = [entry.name for entry in file_name]
 
             for file_name in file_names:
-                if dataset_type != 'test':
+                if dataset_type != 'Test':
                     clean_file_locations.append(f"{directory}/{file}/{dataset_type}/GT_clean_image/{defect}/{file_name}")
                     
                 degraded_file_locations.append(f"{directory}/{file}/{dataset_type}/Degraded_image/{defect}/{file_name}")
@@ -36,21 +36,21 @@ def data_locations(directory, dataset_type = 'train'):
                 
                 defect_mask_file_locations.append(f"{directory}/{file}/{dataset_type}/Defect_mask/{defect}/{file_name1}")
                 
-    if dataset_type == 'test':
+    if dataset_type == 'Test':
         return degraded_file_locations, defect_mask_file_locations
     
     return clean_file_locations, degraded_file_locations, defect_mask_file_locations
 
 
-def data_loading(directory, dataset_type = 'train'):
+def data_loading(directory, dataset_type = 'Train'):
     """
     directory: str
         directory of the input data in the given format
         
-    process_type: str ('train', 'val', 'test')
-        for process_type 'test', clean files won't be available
+    process_type: str ('Train', 'Val', 'Test')
+        for process_type 'Test', clean files won't be available
     """
-    if dataset_type == 'test':
+    if dataset_type == 'Test':
         degraded_loc, defect_mask_loc = data_locations(directory = directory, dataset_type = dataset_type)
     else:
         clean_loc, degraded_loc, defect_mask_loc = data_locations(directory = directory, dataset_type = dataset_type)
@@ -61,10 +61,10 @@ def data_loading(directory, dataset_type = 'train'):
         degraded_image = image_load(degraded_loc[num])
         defect_mask  = image_load(defect_mask_loc[num])
     
-        if dataset_type != 'test':
+        if dataset_type != 'Test':
             clean_image = image_load(clean_loc[num])
             data.append((clean_image, degraded_image, defect_mask))
-        elif dataset_type == 'test':
+        elif dataset_type == 'Test':
             data.append((degraded_image, defect_mask))
             
     return data
