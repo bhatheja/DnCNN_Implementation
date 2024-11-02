@@ -17,9 +17,11 @@
 With This Model We could get resonably good psnr value with high noise even for less number of epochs
 <h3>Results</h3>
 
-<img src="https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Psnr_vs_epoch.png" alt="Image 1" style="display: inline-block; margin-right: 10px;" width="300" />
-<img src="https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_Dist.png" alt="Image 2" style="display: inline-block;" width="300" />
+| Image 1 | Image 2 |
+|---------|---------|
+| ![Image 1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Psnr_vs_epoch.png) | ![Image 2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_Dist.png) |
 
+![PSNR For Best Model](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_for%20validation%20data.png)
 #### Some Resultant denoised images 
 ![Result 1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image1.png)
 ![Result 2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image2.png)
