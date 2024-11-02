@@ -1,3 +1,5 @@
+import os
+
 def image_load(path):
     image = cv.imread(path)
     image[:,:,[0,2]] = image[:,:,[2,0]]
