@@ -62,17 +62,14 @@ def data_loading(directory, dataset_type = 'Train'):
         directory of the input data in the given format
         
     process_type: str ('Train', 'Val', 'Test')
-        for process_type 'Test', clean files won't be available
 
     Returns
     -------
     data: tuple
         tuple having lists of clean image, degraded image, and corresponding mask image
     """
-    if dataset_type == 'Test':
-        degraded_loc, defect_mask_loc = data_locations(directory = directory, dataset_type = dataset_type)
-    else:
-        clean_loc, degraded_loc, defect_mask_loc = data_locations(directory = directory, dataset_type = dataset_type)
+
+    clean_loc, degraded_loc, defect_mask_loc = data_locations(directory = directory, dataset_type = dataset_type)
         
     data = []
     for num in tqdm(range(len(degraded_loc)), desc = f'{dataset_type} Data'): 
@@ -80,11 +77,8 @@ def data_loading(directory, dataset_type = 'Train'):
         degraded_image = image_load(degraded_loc[num])
         defect_mask  = image_load(defect_mask_loc[num])
     
-        if dataset_type != 'Test':
-            clean_image = image_load(clean_loc[num])
-            data.append((clean_image, degraded_image, defect_mask))
-        elif dataset_type == 'Test':
-            data.append((degraded_image, defect_mask))
+        clean_image = image_load(clean_loc[num])
+        data.append((clean_image, degraded_image, defect_mask))
             
     return data
 
@@ -129,7 +123,7 @@ def create_vertical_and_horizontal_patches(image, patch_size=128):
 
 # For saving patch files for training which is only relevant for training and not testing 
 
-def patch_saving(patch_size_info = 128, data_type='train', folder_location = 'should_be_given'):
+def patch_saving(data, patch_size_info = 128, data_type='train', folder_location = 'should_be_given'):
     """
     Input
     -----
@@ -155,37 +149,20 @@ def patch_saving(patch_size_info = 128, data_type='train', folder_location = 'sh
             
         os.makedirs(location, exist_ok = True)
         
-        if data_type=='train':
-            for i in tqdm(range(len(train_data)), desc = f'Type:{tp}'):
-                count+=1
-                patches = create_vertical_and_horizontal_patches(train_data[i][tp], patch_size = patch_size_info)
+        for i in tqdm(range(len(data)), desc = f'Type:{tp}'):
+            count+=1
+            patches = create_vertical_and_horizontal_patches(train_data[i][tp], patch_size = patch_size_info)
 
-                # Registering the image size for stitching 
-                if tp==0:
-                    height, width, _ = np.array(train_data[i][tp]).shape
+            # Registering the image size for stitching 
+            if tp==0:
+                height, width, _ = np.array(data[i][tp]).shape
 
-                    file_size_info.append({'image_Num': count, 'height': height, 'width': width})
-                for patch in range(len(patches)):
-                    array = (patches[patch]*255).astype(np.uint8)
+                file_size_info.append({'image_Num': count, 'height': height, 'width': width})
+            for patch in range(len(patches)):
+                array = (patches[patch]*255).astype(np.uint8)
 
-                    image = Image.fromarray(array)
-                    image.save(f'{location}/{count}_{patch+1}.png')
-
-        elif data_type=='val':
-            for i in tqdm(range(len(val_data)), desc = f'Type:{tp}'):
-                count+=1
-                patches = create_vertical_and_horizontal_patches(val_data[i][tp], patch_size_info)
-
-                # Registering the image size for stitching 
-                if tp==0:
-                    height, width, _ = np.array(val_data[i][tp]).shape
-
-                    file_size_info.append({'image_Num': count, 'height': height, 'width': width})
-                for patch in range(len(patches)):
-                    array = (patches[patch]*255).astype(np.uint8)
-
-                    image = Image.fromarray(array)
-                    image.save(f'{location}/{count}_{patch+1}.png')
+                image = Image.fromarray(array)
+                image.save(f'{location}/{count}_{patch+1}.png')
 
     df = pd.DataFrame(file_size_info)
     df.to_csv(f'{folder_location}/{patch_size_info}x{patch_size_info}_patches/{data_type}/image_size_info_{patch_size_info}x{patch_size_info}.csv',
