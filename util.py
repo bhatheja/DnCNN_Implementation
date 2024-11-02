@@ -241,6 +241,7 @@ def image_save(dataloader, model, device, directory):
         _, h, w, c = noisy_image.shape
         clean_image = clean_image.squeeze(0).detach().cpu().numpy()
         noisy_image = noisy_image.squeeze(0).detach().cpu().numpy()
+        mask = mask.squeeze(0).detach().cpu().numpy()
         noisy_image = np.array(create_vertical_and_horizontal_patches(noisy_image))*255.0
         noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
         noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
