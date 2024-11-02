@@ -230,7 +230,27 @@ def psnr_values(dataloader, model, device, epoch):
         else:
             psnr.append(cal_psnr_numpy(noisy_image, clean_image))
     return psnr
-        
+
+def ssim_values(dataloader, model, device, epoch):
+    ssim = []
+    for ite, (clean_image, noisy_image, _) in enumerate(dataloader):
+        _, h, w, c = noisy_image.shape
+        clean_image = clean_image.squeeze(0).detach().cpu().numpy()
+        noisy_image = noisy_image.squeeze(0).detach().cpu().numpy()
+        if epoch!=0:
+            noisy_image = np.array(create_vertical_and_horizontal_patches(noisy_image))*255.0
+            noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
+            noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
+            output = model(noisy_image)
+            output = output[:, :, 1:-1, 1:-1]
+            output = output.permute(0,2,3,1).detach().cpu().numpy()
+            output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
+            similarity_index, _ = ssim(output, clean_image, full=True)
+            ssim.append(similarity_index)
+        else:
+            similarity_index, _ = ssim(noisy, clean_image, full=True)
+            ssim.append(similarity_index)
+    return ssim
 
 def image_save(dataloader, model, device, directory):
 
