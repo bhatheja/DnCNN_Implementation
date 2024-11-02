@@ -13,3 +13,10 @@
 
 ## Model Architecture
 ![Architecture](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Model_architecure.png)
+
+#### Some Resultant denoised images 
+![Result 1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image1.png)
+![Result 2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image2.png)
+![Result 3](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image3.png)
+![Result 4](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image4.png)
+![Result 5](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image5.png)
