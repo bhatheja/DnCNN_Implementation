@@ -208,7 +208,7 @@ def cal_psnr_numpy(pred, clean, max_value=255.0):
     psnr = 10 * np.log10((max_value ** 2) / mse)
     return psnr
 
-def psnr_values(dataloader, model = model, device = device, epoch = 0):
+def psnr_values(dataloader, model, device = device, epoch = 0):
     # h, w, c = image.shape
     for ite, (clear_image, noisy_image, _) in enumerate(dataloader):
         h, w, c = noisy_image.shape
