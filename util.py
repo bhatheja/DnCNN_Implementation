@@ -264,7 +264,7 @@ def image_save(dataloader, model, device, directory):
         mask_image = Image.fromarray(mask)
         mask_image.save(f'{directory}/mask/{ite+1}.png')
 
-def defect_ssim_psnr(len_data = 88, max_value = 255.0, directory):
+def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
     psnr = [], psnr_active = [], ssim = []
     for i in range(l, len(len_data)):
         clr_image = image_load(f'{directory}/clean')
