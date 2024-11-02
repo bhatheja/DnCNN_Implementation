@@ -266,7 +266,7 @@ def image_save(dataloader, model, device, directory):
 
 def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
     psnr = [], psnr_active = [], ssim = []
-    for i in range(l, len(len_data)):
+    for i in tqdm(range(l, len(len_data)), total = len_data):
         clr_image = image_load(f'{directory}/clean')
         gen_image = image_load(f'{directory}/generated')
         mask = image_load_plt(f'{directory}/generated')
