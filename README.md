@@ -11,3 +11,5 @@
 
 <a href="https://arxiv.org/abs/1608.03981" target="_blank">Beyond a Gaussian Denoiser: Residual Learning of Deep CNN for Image Denoising</a>
 
+## Model Architecture
+![Architecture](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Screenshot%202024-11-02%20234841.png)
