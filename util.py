@@ -170,4 +170,18 @@ def patch_saving(data, patch_size_info = 128, data_type='train', folder_location
               index=False)
     print(f'Images Saved to {folder_location}/{patch_size_info}x{patch_size_info}_patches/{data_type}')
 
+# Loading images (patches) from dataset
 
+def patches_load(directory, data_type = 'train', patch_size = 128, total_images = 932):
+    if patch_size == 128:
+        total_patches = 64
+    elif patch_size == 64:
+        total_patches = 256
+
+    patches=[]
+    for image_no in tqdm(range(0,total_images)):
+        for patch_idx in range(0,total_patches):
+            clean = image_load(f'{directory}/clean/{image_no+1}_{patch_idx+1}.png')
+            deg = image_load(f'{directory}/degraded/{image_no+1}_{patch_idx+1}.png')
+            patches.append((clean, deg))
+    return patches
