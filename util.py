@@ -214,7 +214,7 @@ def psnr_values(dataloader, model = model, device = device, epoch = 0):
         h, w, c = noisy_image.shape
         clean_image = clean_image.detach().cpu().numpy()
         noisy_image = noisy_image.detach().cpu().numpy()
-        if epoch!=0
+        if epoch!=0:
             noisy_image = create_vertical_and_horizontal_patches(noisy_image)
             noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
             noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
