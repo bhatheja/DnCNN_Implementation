@@ -127,6 +127,8 @@ def patch_saving(data, patch_size_info = 128, data_type='train', folder_location
     """
     Input
     -----
+    data: tuple
+        it is having tuples of type (clean image, degraded image, defect mask image) for training purpose
     patch_size_info: int
         the patch size in which the images to be stored
     data_type: str
@@ -151,7 +153,7 @@ def patch_saving(data, patch_size_info = 128, data_type='train', folder_location
         
         for i in tqdm(range(len(data)), desc = f'Type:{tp}'):
             count+=1
-            patches = create_vertical_and_horizontal_patches(train_data[i][tp], patch_size = patch_size_info)
+            patches = create_vertical_and_horizontal_patches(data[i][tp], patch_size = patch_size_info)
 
             # Registering the image size for stitching 
             if tp==0:
