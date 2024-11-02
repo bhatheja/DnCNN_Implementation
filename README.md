@@ -30,6 +30,7 @@ With This Model We could get resonably good psnr value with high noise even for 
 ![Result 5](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image_5.png)
 
 | Acknowledgements |
+| ---------------- |
 | <a href="https://arxiv.org/abs/1608.03981" target="_blank">Paper on DnCNN by  Kai Zhang, Wangmeng Zuo, Yunjin Chen, Deyu Meng, and Lei Zhang</a>|
 | Kaggle for their free gpu access |
 
