@@ -287,14 +287,14 @@ def image_save(dataloader, model, device, directory):
 def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
     psnr = []; psnr_active = []; ssim_arr = []
     for i in tqdm(range(1, len_data), total = len_data):
-        clr_image = image_load(f'{directory}/clean/{i+1}.png')
-        gen_image = image_load(f'{directory}/generated/{i+1}.png')
+        clr_image = cv.imread(f'{directory}/clean/{i+1}.png')
+        gen_image = cv.imread(f'{directory}/generated/{i+1}.png')
         mask = image_load_plt(f'{directory}/mask/{i+1}.png')
 
-        print(mask.shape)
         clr_mask = clr_image * mask
         gen_mask = gen_image * mask
 
+         = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         mse = np.mean((gen_mask - clr_mask) ** 2)
         psnr.append(10 * np.log10((max_value ** 2) / mse))
 
@@ -302,11 +302,9 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
         mse_active = mse*h*w*c/mask.sum()
         psnr_active.append(10 * np.log10((max_value ** 2) / mse_active))
 
+        clr_mask = cv2.cvtColor(clr_mask, cv2.COLOR_BGR2GRAY)
+        gen_mask = cv2.cvtColor(gen_mask, cv2.COLOR_BGR2GRAY)
         similarity_index, _ = ssim(gen_mask, clr_mask, full=True)
         ssim_arr.append(similarity_index)
     return ssim, psnr, psnr_active
-
-
         
-        
-    
