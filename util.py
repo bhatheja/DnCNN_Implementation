@@ -211,6 +211,7 @@ def cal_psnr_numpy(pred, clean, max_value=255.0):
 def psnr_values(dataloader, model, device, epoch):
     # h, w, c = image.shape
     for ite, (clear_image, noisy_image, _) in enumerate(dataloader):
+        print(noisy_image.shape)
         h, w, c = noisy_image.shape
         clean_image = clean_image.detach().cpu().numpy()
         noisy_image = noisy_image.detach().cpu().numpy()
