@@ -220,13 +220,13 @@ def psnr_values(dataloader, model, device, epoch):
         if epoch!=0:
             noisy_image = np.array(create_vertical_and_horizontal_patches(noisy_image))
             noisy_image = torch.from_numpy(noisy_image).permute(0,3,1,2).float().to(device)
-            print(noisy_image.shape)
             noisy_image = torch.nn.functional.pad(noisy_image, (1, 1, 1, 1, 0, 0, 0, 0), value=0)
-            print(noisy_image.shape)
             output = model(noisy_image)
             output = output[:, :, 1:-1, 1:-1]
             output = output.permute(0,2,3,1).detach().cpu().numpy()
             output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
+            print(output.max(), clean_image.max())
+
             psnr.append(cal_psnr_numpy(output, clean_image))
         else:
             psnr.append(cal_psnr_numpy(noisy_image, clean_image))
