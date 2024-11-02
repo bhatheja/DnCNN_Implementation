@@ -302,7 +302,7 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
         mse_active = mse*h*w*c/mask.sum()
         psnr_active.append(10 * np.log10((max_value ** 2) / mse_active))
 
-        similarity_index, _ = ssim(image1, image2, full=True)
+        similarity_index, _ = ssim(gen_mask, clr_mask, full=True)
         ssim_arr.append(similarity_index)
     return ssim, psnr, psnr_active
 
