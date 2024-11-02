@@ -225,8 +225,6 @@ def psnr_values(dataloader, model, device, epoch):
             output = output[:, :, 1:-1, 1:-1]
             output = output.permute(0,2,3,1).detach().cpu().numpy()
             output = retrieve_image(output, patch_size=128, img_size_height = h, img_size_width = w)
-            print(output.max(), clean_image.max())
-
             psnr.append(cal_psnr_numpy(output, clean_image))
         else:
             psnr.append(cal_psnr_numpy(noisy_image, clean_image))
