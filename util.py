@@ -289,10 +289,14 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
     for i in tqdm(range(0, len_data), total = len_data):
         clr_image = cv.imread(f'{directory}/output_images/clean/{i+1}.png')
         gen_image = cv.imread(f'{directory}/output_images/generated/{i+1}.png')
+        clr_image[:,:,[0,2]] = clr_image[:,:,[2,0]]
+        gen_image[:,:,[0,2]] = gen_image[:,:,[2,0]]
         mask = image_load_plt(f'{directory}/output_images/mask/{i+1}.png')
 
         clr_mask = clr_image * mask
+        plt.imshow(clr_mask)
         gen_mask = gen_image * mask
+        plt.imshow(gen_mask)
 
         if evaluation:
             mse = np.mean((gen_mask - clr_mask) ** 2)
