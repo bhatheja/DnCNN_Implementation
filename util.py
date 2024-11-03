@@ -294,9 +294,11 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
         mask = image_load_plt(f'{directory}/output_images/mask/{i+1}.png')
 
         clr_mask = clr_image * mask
-        plt.imshow(clr_mask)
         gen_mask = gen_image * mask
+        plt.imshow(clr_mask)
+        plt.show()
         plt.imshow(gen_mask)
+        plt.show()
 
         if evaluation:
             mse = np.mean((gen_mask - clr_mask) ** 2)
