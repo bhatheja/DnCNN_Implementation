@@ -284,7 +284,7 @@ def image_save(dataloader, model, device, directory):
         mask_image = Image.fromarray(mask)
         mask_image.save(f'{directory}/output_images/mask/{ite+1}.png')
 
-def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = True, image_save = True):
+def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = True, masked_defect_image_save = True):
     psnr = []; psnr_active = []; ssim_arr = []
     for i in tqdm(range(0, len_data), total = len_data):
         clr_image = cv.imread(f'{directory}/output_images/clean/{i+1}.png')
@@ -306,7 +306,7 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
             similarity_index, _ = ssim(gen_mask, clr_mask, full=True, data_range = 255, channel_axis=2)
             ssim_arr.append(similarity_index)
 
-        if image_save:
+        if masked_defect_image_save:
             os.makedirs(f'{directory}/masked_defects/clean', exist_ok = True)
             os.makedirs(f'{directory}/masked_defects/generated', exist_ok = True)
             
