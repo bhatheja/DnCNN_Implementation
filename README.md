@@ -20,7 +20,7 @@ With This Model We could get resonably good psnr value with high noise even for 
 
 
 
-### Some Resultant denoised images 
+### Few Resultant denoised images for demonstration
 ![Result 1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image1.png)
 ![Result 2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image2.png)
 ![Result 3](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Result_image_3.png)
@@ -32,6 +32,20 @@ With This Model We could get resonably good psnr value with high noise even for 
 | PSNR VS EPOCH | SSIM VS EPOCH |
 |---------|---------|
 | ![PSNR VS EPOCH](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_vs_Epoch.png) | ![SSIM VS EPOCH](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM_vs_Epoch.png) |
+
+
+#### Parameters Distribution Across Epochs:
+| PSNR Distribution | SSIM Distribution |
+|---------|---------|
+| ![PSNR Distribution](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_Dist_Across_Epoch.png) | ![SSIM Distribution](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM_Dist_Across_Epoch.png) |
+
+
+#### Distribution of PSNR and SSIM for the best model:
+| PSNR Frequency Hist | SSIM Frequency Hist |
+|---------|---------|
+| ![PSNR Frequency Hist](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_Hist.png) | ![SSIM Frequency Hist](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM_Hist.png) |
+
+
 
 
 ![PSNR For Best Model](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_for%20validation%20data.png)
