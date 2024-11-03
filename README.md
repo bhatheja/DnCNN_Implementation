@@ -14,7 +14,7 @@
 ## Model Architecture
 ![Architecture](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Model_architecure.png)
 
-With This Model We could get resonably good psnr value with high noise even for less number of epochs and large enough patching.
+This Model provides resonably good psnr value with high noise even when trained for less number of epcohs and large enough patching.
 <h3>Results. We had choosen the depth of the network to be 17 which is large enough for capturing the contextual information from the surrounding of the pixel. The receptive field for the implemented netword is 35 for out case.</h3>
 
 
