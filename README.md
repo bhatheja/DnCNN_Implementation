@@ -46,7 +46,9 @@ This Model provides resonably good psnr value with high noise even when trained 
 | ![PSNR Frequency Hist](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR_Hist.png) | ![SSIM Frequency Hist](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM_Hist.png) |
 
 ### Masked defect
-![Masked defect](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/additional.png)
+![masked_1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_1.png)
+![masked_2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_2.png)
+![masked_3](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_3.png)
 ### Evaluation after masking defect in clean image and denoised image
 #### SSIM for the complete image
 ![SSIM](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM.png)
