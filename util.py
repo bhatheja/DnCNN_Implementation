@@ -313,7 +313,7 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
             clr_image = (clr_image).astype(np.uint8)
             gen_image = (gen_image).astype(np.uint8)
 
-            image_1 = Image.fromarray(clean_image)
+            image_1 = Image.fromarray(clr_image)
             image_1.save(f'{directory}/masked_defects/clean/{i+1}.png')
 
             image_2 = Image.fromarray(gen_image)
