@@ -293,12 +293,9 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
         gen_image[:,:,[0,2]] = gen_image[:,:,[2,0]]
         mask = image_load_plt(f'{directory}/output_images/mask/{i+1}.png')
 
+        
         clr_mask = clr_image * mask
         gen_mask = gen_image * mask
-        plt.imshow(clr_mask)
-        plt.show()
-        plt.imshow(gen_mask)
-        plt.show()
 
         if evaluation:
             mse = np.mean((gen_mask - clr_mask) ** 2)
@@ -316,13 +313,13 @@ def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = T
             os.makedirs(f'{directory}/masked_defects/clean', exist_ok = True)
             os.makedirs(f'{directory}/masked_defects/generated', exist_ok = True)
             
-            clr_image = (clr_image).astype(np.uint8)
-            gen_image = (gen_image).astype(np.uint8)
+            clr_mask = (clr_mask).astype(np.uint8)
+            gen_mask = (gen_mask).astype(np.uint8)
 
-            image_1 = Image.fromarray(clr_image)
+            image_1 = Image.fromarray(clr_mask)
             image_1.save(f'{directory}/masked_defects/clean/{i+1}.png')
 
-            image_2 = Image.fromarray(gen_image)
+            image_2 = Image.fromarray(gen_mask)
             image_2.save(f'{directory}/masked_defects/generated/{i+1}.png')
     if evaluation:
         return ssim_arr, psnr, psnr_active
