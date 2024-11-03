@@ -254,9 +254,9 @@ def ssim_values(dataloader, model, device, epoch):
 
 def image_save(dataloader, model, device, directory):
 
-    os.makedirs(f'{directory}/clean', exist_ok = True)
-    os.makedirs(f'{directory}/generated', exist_ok = True)
-    os.makedirs(f'{directory}/mask', exist_ok = True)
+    os.makedirs(f'{directory}/output_images/clean', exist_ok = True)
+    os.makedirs(f'{directory}/output_images/generated', exist_ok = True)
+    os.makedirs(f'{directory}/output_images/mask', exist_ok = True)
     for ite, (clean_image, noisy_image, mask) in tqdm(enumerate(dataloader)):
         
         _, h, w, c = noisy_image.shape
@@ -276,33 +276,49 @@ def image_save(dataloader, model, device, directory):
         mask = (mask).astype(np.uint8)
 
         clr_image = Image.fromarray(clean_image)
-        clr_image.save(f'{directory}/clean/{ite+1}.png')
+        clr_image.save(f'{directory}/output_images/clean/{ite+1}.png')
 
         gen_image = Image.fromarray(output)
-        gen_image.save(f'{directory}/generated/{ite+1}.png')
+        gen_image.save(f'{directory}/output_images/generated/{ite+1}.png')
         
         mask_image = Image.fromarray(mask)
-        mask_image.save(f'{directory}/mask/{ite+1}.png')
+        mask_image.save(f'{directory}/output_images/mask/{ite+1}.png')
 
-def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0):
+def defect_ssim_psnr(directory, len_data = 88, max_value = 255.0, evaluation = True, image_save = True):
     psnr = []; psnr_active = []; ssim_arr = []
-    for i in tqdm(range(1, len_data), total = len_data):
-        clr_image = cv.imread(f'{directory}/clean/{i+1}.png')
-        gen_image = cv.imread(f'{directory}/generated/{i+1}.png')
-        mask = image_load_plt(f'{directory}/mask/{i+1}.png')
+    for i in tqdm(range(0, len_data), total = len_data):
+        clr_image = cv.imread(f'{directory}/output_images/clean/{i+1}.png')
+        gen_image = cv.imread(f'{directory}/output_images/generated/{i+1}.png')
+        mask = image_load_plt(f'{directory}/output_images/mask/{i+1}.png')
 
         clr_mask = clr_image * mask
         gen_mask = gen_image * mask
 
-        mse = np.mean((gen_mask - clr_mask) ** 2)
-        psnr.append(10 * np.log10((max_value ** 2) / mse))
+        if evaluation:
+            mse = np.mean((gen_mask - clr_mask) ** 2)
+            psnr.append(10 * np.log10((max_value ** 2) / mse))
+    
+            mse_active = np.sum((gen_mask - clr_mask) ** 2)/np.sum(mask)
+            psnr_active.append(10 * np.log10((max_value ** 2) / mse_active))
+    
+            # clr_mask = cv.cvtColor(clr_mask, cv.COLOR_BGR2GRAY)
+            # gen_mask = cv.cvtColor(gen_mask, cv.COLOR_BGR2GRAY)
+            similarity_index, _ = ssim(gen_mask, clr_mask, full=True, data_range = 255, channel_axis=2)
+            ssim_arr.append(similarity_index)
 
-        mse_active = np.sum((gen_mask - clr_mask) ** 2)/np.sum(mask)
-        psnr_active.append(10 * np.log10((max_value ** 2) / mse_active))
+        if image_save:
+            os.makedirs(f'{directory}/masked_defects/clean', exist_ok = True)
+            os.makedirs(f'{directory}/masked_defects/generated', exist_ok = True)
+            
+            clr_image = (clr_image).astype(np.uint8)
+            gen_image = (gen_image).astype(np.uint8)
 
-        # clr_mask = cv.cvtColor(clr_mask, cv.COLOR_BGR2GRAY)
-        # gen_mask = cv.cvtColor(gen_mask, cv.COLOR_BGR2GRAY)
-        similarity_index, _ = ssim(gen_mask, clr_mask, full=True, data_range = 255, channel_axis=2)
-        ssim_arr.append(similarity_index)
-    return ssim_arr, psnr, psnr_active
-        
+            image_1 = Image.fromarray(clean_image)
+            image_1.save(f'{directory}/masked_defects/clean/{i+1}.png')
+
+            image_2 = Image.fromarray(gen_image)
+            image_2.save(f'{directory}/masked_defects/generated/{i+1}.png')
+    if evaluation:
+        return ssim_arr, psnr, psnr_active
+
+    return None, None, None
