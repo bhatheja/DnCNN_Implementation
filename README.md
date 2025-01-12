@@ -3,9 +3,6 @@
 | Name | Roll No. |
 |----------|----------|
 | Rahul Bhatheja   | EE23M079   |
-| Rohit S   | AM23S006   |
-| Sourav Majhi | MA23M022 |
-| Suman Das | MA23M023 |
 
 ### For this project, we implemented feed-forward denoising convolutional neural networks (DnCNN), which utilize residual learning and batch normalization to boost denoising performance. In addition to that, we used patching of 128x128 to augument dataset.
 
