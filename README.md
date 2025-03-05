@@ -4,15 +4,15 @@
 |----------|----------|
 | Rahul Bhatheja   | EE23M079   |
 
-### For this project, we implemented feed-forward denoising convolutional neural networks (DnCNN), which utilize residual learning and batch normalization to boost denoising performance. In addition to that, we used patching of 128x128 to augument dataset.
+### For this project, we implemented feed-forward denoising convolutional neural networks (DnCNN), which utilize residual learning and batch normalization to boost denoising performance. We also used patching of 128x128 to augment the dataset.
 
 <a href="https://arxiv.org/abs/1608.03981" target="_blank">Beyond a Gaussian Denoiser: Residual Learning of Deep CNN for Image Denoising</a>
 
 ## Model Architecture
 ![Architecture](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/Model_architecure.png)
 
-This Model provides resonably good psnr value with high noise even when trained for less number of epcohs and large enough patching.
-<h3>Results. We had choosen the depth of the network to be 17 which is large enough for capturing the contextual information from the surrounding of the pixel. The receptive field for the implemented netword is 35 for out case.</h3>
+This Model provides a reasonably good psnr value with high noise even when trained for fewer epochs and large enough patching.
+<h3>Results. We had chosen the depth of the network to be 17 which is large enough for capturing the contextual information from the surrounding of the pixel. The receptive field for the implemented network is 35 for our case.</h3>
 
 
 
@@ -46,11 +46,11 @@ This Model provides resonably good psnr value with high noise even when trained 
 ![masked_1](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_1.png)
 ![masked_2](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_2.png)
 ![masked_3](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/masked_3.png)
-### Evaluation after masking defect in clean image and denoised image
+### Evaluation after masking defect in the clean image and denoised image
 #### SSIM for the complete image
 ![SSIM](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/SSIM.png)
 
-#### PSNR for the complete image which will generally be very high becuase size of the mask is very small
+#### PSNR for the complete image which will generally be very high because the size of the mask is very small
 ![PSNR](https://github.com/bhatheja/DnCNN_Implementation/blob/main/images/PSNR.png)
 
 #### PSNR value for only active pixels
